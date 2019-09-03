@@ -7,8 +7,11 @@ export class SearchBar extends Component {
     this.state = {
       searchTerm: props.searchTerm,
     };
+  }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmit(this.state.searchTerm);
   }
 
   render() {
@@ -23,16 +26,11 @@ export class SearchBar extends Component {
         />
         <SearchTypeControls
           searchType={ this.props.searchType }
-          // onCharactersClick={ this.props.onSelect('Characters') }
-          // onComicsClick={ this.props.onSelect('Comics') }
+          onCharactersClick={ this.props.onSelect.bind(this, 'Characters') }
+          onComicsClick={ this.props.onSelect.bind(null, 'Comics') }
         />
         <button className="search-bar__submit" type="submit">Search</button>
       </form>
     );
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.onSubmit(this.state.searchTerm);
   }
 }
